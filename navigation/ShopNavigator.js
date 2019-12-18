@@ -134,7 +134,7 @@ const ShopNavigator = createDrawerNavigator(
 							color={Colors.primary}
 							onPress={() => {
 								dispatch(logout());
-								// props.navigation.navigate('Auth'); //token and id has already been cleared in redux
+								//token and id has already been cleared in redux
 							}}
 						/>
 					</SafeAreaView>
