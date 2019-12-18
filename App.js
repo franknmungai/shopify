@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { productReducer } from './store/reducers/productReducer';
 import NavigationContainer from './navigation/NavigationContainer';
-import { composeWithDevTools } from 'redux-devtools-extension';
+// import { composeWithDevTools } from 'redux-devtools-extension';
 import cartReducer from './store/reducers/cartReducer';
 import ordersReducer from './store/reducers/ordersReducer';
 import authReducer from './store/reducers/authReducer';
