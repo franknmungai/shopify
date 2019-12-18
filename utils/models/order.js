@@ -27,9 +27,9 @@ class Order {
 			minute: '2-digit'
 		});
 	}
-	get dateFormat() {
-		return moment(this.date).format('MMMM Do YYYY, hh:mm');
-	}
+	// get dateFormat() {
+	// 	return moment(this.date).format('MMMM Do YYYY, hh:mm');
+	// }
 }
 
 export default Order;
