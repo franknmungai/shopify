@@ -8,7 +8,7 @@ export const fetchProducts = () => async (dispatch, getState) => {
 			'https://shopify-6616e.firebaseio.com/products.json'
 		);
 		if (!response.ok) {
-			throw new Error('Something went wrong');
+			throw new Error('Could not get products. Try again');
 		}
 		const productsData = await response.json();
 

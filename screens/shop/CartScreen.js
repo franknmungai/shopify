@@ -34,7 +34,7 @@ const CartScreen = props => {
 	const addOrderHandler = async () => {
 		try {
 			setIsLoading(true);
-			await dispatch(addOrder(cartItems, cartTotal));
+			await dispatch(addOrder(cartItems, cartTotal)); //using await on dispatch is pretty cool. My async actions throw errors which I then store in component state. Cool
 		} catch (error) {
 			setError(error);
 		}

@@ -11,7 +11,7 @@ const NavigationContainer = props => {
 		if (!isAuthenticated) {
 			navRef.current.dispatch(
 				NavigationActions.navigate({ routeName: 'Auth' })
-			); //dispatch is method on createAppNavigator exported by ShopNavigator
+			); //dispatch is method on createAppContainer exported by ShopNavigator
 		}
 	}, [isAuthenticated]);
 	return <ShopNavigator ref={navRef} />;

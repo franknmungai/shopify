@@ -5,7 +5,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation'; //
 import { createStackNavigator } from 'react-navigation-stack';
 import {
 	createDrawerNavigator,
-	DrawerNavigatorItems
+	DrawerNavigatorItems //Component that renders the navigation list in the drawer.
 } from 'react-navigation-drawer';
 import ProductOverviewScreen from '../screens/shop/ProductsOverviewScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailsScreen';

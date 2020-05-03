@@ -31,7 +31,7 @@ const ProductOverviewScreen = props => {
 		setError(null);
 		setIsRefreshing(true);
 		try {
-			await dispatch(fetchProducts()); //returns a promise
+			await dispatch(fetchProducts()); //returns a promise. I can use await on dispatch 😃😃😃
 			setIsRefreshing(false);
 		} catch (err) {
 			setError(err);
@@ -49,6 +49,7 @@ const ProductOverviewScreen = props => {
 	//* refresh the products again when we navigate to the component to show latest db changes
 	useEffect(() => {
 		const willFocusListener = props.navigation.addListener(
+			//perform a refresh everytime we focus on this screen
 			'willFocus',
 			loadProducts
 		);
@@ -99,7 +100,7 @@ const ProductOverviewScreen = props => {
 	return (
 		<FlatList
 			onRefresh={loadProducts} // add pull to refresh
-			refreshing={isRefreshing}
+			refreshing={isRefreshing} //set this to true while awaiting data from a refresh
 			data={availableProducts}
 			keyExtractor={item => item.id}
 			renderItem={(

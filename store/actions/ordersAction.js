@@ -54,7 +54,7 @@ export const addOrder = (cartItems, totalAmount) => async (
 		);
 
 		if (!response.ok) {
-			throw new Error('Something went wrong');
+			throw new Error('Could not add your order. Retry');
 		}
 
 		const data = await response.json();

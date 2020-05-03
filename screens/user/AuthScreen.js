@@ -6,7 +6,8 @@ import {
 	StyleSheet,
 	TextInput,
 	ActivityIndicator,
-	Alert
+	Alert,
+	ImageBackground
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -101,31 +102,36 @@ const AuthScreen = props => {
 	return (
 		<KeyboardAvoidingView style={styles.screen}>
 			<LinearGradient
-				colors={[/*'#ffedff' '#ffe3ff'*/ '#48D2F2', '#fff']}
+				colors={[/*'#ffedff' '#ffe3ff'*/ '#fff', '#fff']}
 				style={styles.gradient}
 			>
-				<Card style={styles.authContainer}>
-					<Input
-						id="email"
-						label="Email"
-						keyboardType="email-address"
-						required
-						email
-						autoCapitalize="none"
-						errorText="Please provide a valid email address"
-						// value={formState.inputValues.email}
-						onInputChange={inputChangeHandler}
-						placeholder="youremail@provider.com"
-					/>
+				<ImageBackground
+					source={require('../../assets/steps.png')}
+					// style={{ width: '100%', height: '100%' }}
+					style={styles.gradient}
+				>
+					<Card style={styles.authContainer}>
+						<Input
+							id="email"
+							label="Email"
+							keyboardType="email-address"
+							required
+							email
+							autoCapitalize="none"
+							errorText="Please provide a valid email address"
+							// value={formState.inputValues.email}
+							onInputChange={inputChangeHandler}
+							placeholder="youremail@provider.com"
+						/>
 
-					<TextInput
-						style={styles.password}
-						value={text}
-						onChangeText={text => setText(text)}
-						secureTextEntry
-					/>
-					{/* <Text>{errors}</Text> */}
-					{/* <Input
+						<TextInput
+							style={styles.password}
+							value={text}
+							onChangeText={text => setText(text)}
+							secureTextEntry //password
+						/>
+						{/* <Text>{errors}</Text> */}
+						{/* <Input
 						id="password"
 						label="Password"
 						keyboardType="default"
@@ -137,27 +143,28 @@ const AuthScreen = props => {
 						secureTextEntry //for password fields
 						minLength={5}
 					/> */}
-					<View style={styles.btnContainer}>
-						{isLoading ? (
-							<ActivityIndicator size="small" color={Colors.primary} />
-						) : (
+						<View style={styles.btnContainer}>
+							{isLoading ? (
+								<ActivityIndicator size="small" color={Colors.primary} />
+							) : (
+								<Button
+									title={isSignup ? 'Sign Up' : 'Login'}
+									onPress={authenticate}
+									color={Colors.primary}
+								/>
+							)}
+						</View>
+						<View style={styles.btnContainer}>
 							<Button
-								title={isSignup ? 'Sign Up' : 'Login'}
-								onPress={authenticate}
-								color={Colors.primary}
+								title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`}
+								onPress={() => {
+									setIsSignup(prevState => !prevState);
+								}}
+								color={Colors.accent}
 							/>
-						)}
-					</View>
-					<View style={styles.btnContainer}>
-						<Button
-							title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`}
-							onPress={() => {
-								setIsSignup(prevState => !prevState);
-							}}
-							color={Colors.accent}
-						/>
-					</View>
-				</Card>
+						</View>
+					</Card>
+				</ImageBackground>
 			</LinearGradient>
 		</KeyboardAvoidingView>
 	);
@@ -174,7 +181,9 @@ const styles = StyleSheet.create({
 	gradient: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		width: '100%',
+		height: '100%'
 	},
 	authContainer: {
 		width: '70%',
@@ -190,7 +199,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 4,
 		borderBottomColor: '#ccc',
 		borderBottomWidth: 1,
-		marginTop: 12
+		marginVertical: 20
 	}
 });
 

@@ -6,14 +6,13 @@
     "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icons8-map-96.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icons8-map-96.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,6 +24,14 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons8-map-96.png",
+        "backgroundColor": "#0078FF"
+      }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/franknmungai/shopify"
   }
 }
