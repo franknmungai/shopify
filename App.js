@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
@@ -5,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import { productReducer } from './store/reducers/productReducer';
-import NavigationContainer from './navigation/NavigationContainer';
+import AppNavigator from './navigation';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import cartReducer from './store/reducers/cartReducer';
 import ordersReducer from './store/reducers/ordersReducer';
