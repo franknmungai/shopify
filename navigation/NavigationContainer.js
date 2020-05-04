@@ -10,6 +10,7 @@ const NavigationContainer = props => {
 	useEffect(() => {
 		if (!isAuthenticated) {
 			navRef.current.dispatch(
+				//you can call dispatch from a Navigator.
 				NavigationActions.navigate({ routeName: 'Auth' })
 			); //dispatch is method on createAppContainer exported by ShopNavigator
 		}
