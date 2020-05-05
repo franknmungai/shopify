@@ -7,12 +7,18 @@ import { Ionicons } from '@expo/vector-icons';
 import ProductOverviewScreen, {
 	ProductsOverviewScreenOptions
 } from '../screens/shop/ProductsOverviewScreen';
+
 import ProductDetailScreen, {
 	ProductDetailsScreenOptions
 } from '../screens/shop/ProductDetailsScreen';
-import Colors from '../theme/Colors';
+
+import OrdersScreen, {
+	screenOptions as OrdersScreenOptions
+} from '../screens/shop/OrdersScreen';
+
 import CartScreen, { cartScreenOptions } from '../screens/shop/CartScreen';
-import OrdersScreen from '../screens/shop/OrdersScreen';
+
+import Colors from '../theme/Colors';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductsScreen';
 import AuthScreen from '../screens/user/AuthScreen';
@@ -39,7 +45,7 @@ const ProductsStackNavigator = createStackNavigator();
 export const ProductsNavigator = () => {
 	return (
 		<ProductsStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
-			<ProductsStackNavigator.Screen
+			<ProductsStackNavigator.Screen //specifying a route and its configurations
 				name="productsOverview"
 				component={ProductOverviewScreen}
 				options={ProductsOverviewScreenOptions}
@@ -58,14 +64,18 @@ export const ProductsNavigator = () => {
 	);
 };
 
-const OrdersStackNavigator = createStackNavigator(
-	{
-		orders: OrdersScreen
-	},
-	{
-		defaultNavigationOptions: defaultStackNavOptions
-	}
-);
+const OrdersStackNavigator = createStackNavigator();
+export const OrdersNavigator = () => {
+	return (
+		<OrdersStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+			<OrdersStackNavigator.Screen
+				name="orders"
+				component={OrdersScreen}
+				options={OrdersScreenOptions}
+			/>
+		</OrdersStackNavigator.Navigator>
+	);
+};
 
 const UserStackNavigator = createStackNavigator(
 	{

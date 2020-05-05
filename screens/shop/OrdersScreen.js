@@ -14,6 +14,7 @@ import CustomHeaderButton from './UI/HeaderButton';
 import OrderItem from '../../components/shop/OrderItem';
 import { fetchOrders } from '../../store/actions/ordersAction';
 import Colors from '../../theme/Colors';
+
 const OrdersScreen = props => {
 	const orders = useSelector(state => state.orders.orders);
 	const dispatch = useDispatch();
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
 		flex: 1
 	}
 });
-OrdersScreen.navigationOptions = navData => ({
+export const screenOptions = navData => ({
 	headerTitle: 'Your orders',
 	headerLeft: (
 		<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
