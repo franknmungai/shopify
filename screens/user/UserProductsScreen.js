@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import CustomHeaderButton from '../shop/UI/HeaderButton';
 import Colors from '../../theme/Colors';
 import { deleteProduct } from '../../store/actions/productActions';
+
 const UserProductsScreen = props => {
 	const userProducts = useSelector(state => state.products.userProducts);
 	const dispatch = useDispatch();
 	const selectItemHandler = id => {
 		props.navigation.navigate('editProduct', { productId: id });
 	};
+
 	const deleteItemHandler = id => {
 		Alert.alert('Are you sure', 'Do You want to delete this item ?', [
 			{ text: 'No', style: 'default' },
@@ -59,7 +61,7 @@ const UserProductsScreen = props => {
 	);
 };
 
-UserProductsScreen.navigationOptions = navData => ({
+export const screenOptions = navData => ({
 	headerTitle: 'My Shop',
 	headerLeft: (
 		<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>

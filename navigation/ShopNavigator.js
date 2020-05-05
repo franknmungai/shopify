@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform, Button, View, SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation'; //combine our navigators into a single component
 import { Ionicons } from '@expo/vector-icons';
 
 import ProductOverviewScreen, {
@@ -16,18 +15,26 @@ import OrdersScreen, {
 	screenOptions as OrdersScreenOptions
 } from '../screens/shop/OrdersScreen';
 
+import UserProductsScreen, {
+	screenOptions as UserProductsScreenOptions
+} from '../screens/user/UserProductsScreen';
 import CartScreen, { cartScreenOptions } from '../screens/shop/CartScreen';
 
 import Colors from '../theme/Colors';
-import UserProductsScreen from '../screens/user/UserProductsScreen';
-import EditProductScreen from '../screens/user/EditProductsScreen';
+import EditProductScreen, {
+	screenOptions as EditProductsScreenOptions
+} from '../screens/user/EditProductsScreen';
+
 import AuthScreen from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import { logout } from '../store/actions/authActions';
 
 // ? React Navigation v5.
 import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+	createDrawerNavigator,
+	DrawerItemList
+} from '@react-navigation/drawer';
 
 // ? The default stack navigation options: These haven't changed in react-navigtion v5. Just how you apply this configurations😇
 const defaultStackNavOptions = {
@@ -77,14 +84,30 @@ export const OrdersNavigator = () => {
 	);
 };
 
-const UserStackNavigator = createStackNavigator(
-	{
-		userProducts: UserProductsScreen,
-		editProduct: EditProductScreen
-	},
-	{
-		defaultNavigationOptions: defaultStackNavOptions
-	}
+const UserStackNavigator = createStackNavigator();
+
+export const UserStackNavigator = () => {
+	return (
+		<UserStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+			<UserStackNavigator.Screen
+				name="userProducts"
+				component={UserProductsScreen}
+				options={UserProductsScreenOptions}
+			/>
+			<UserStackNavigator.Screen
+				name="editProduct"
+				component={EditProductScreen}
+				options={EditProductsScreenOptions}
+			/>
+		</UserStackNavigator.Navigator>
+	);
+};
+
+const AuthStackNavigator = createStackNavigator();
+export const AuthNavigator = () => (
+	<AuthStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+		<AuthStackNavigator.Screen name="Auth" component={AuthScreen} />
+	</AuthStackNavigator.Navigator>
 );
 
 const AuthStackNavigator = createStackNavigator(
@@ -96,72 +119,74 @@ const AuthStackNavigator = createStackNavigator(
 	}
 );
 // * Combine our three stack navigators
-const ShopNavigator = createDrawerNavigator(
-	{
-		Products: {
-			screen: ProductStackNavigator,
-			navigationOptions: {
-				drawerIcon: drawerConfig => (
-					<Ionicons
-						name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-						color={drawerConfig.tintColor}
-						size={23}
-					/>
-				)
-			}
-		},
-		Orders: {
-			screen: OrdersStackNavigator,
-			navigationOptions: {
-				drawerIcon: drawerConfig => (
-					<Ionicons
-						name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
-						size={23}
-						color={drawerConfig.tintColor} //color of icon depends on tint color
-					/>
-				)
-			}
-		},
-		User: {
-			screen: UserStackNavigator,
-			navigationOptions: {
-				drawerIcon: drawerConfig => (
-					<Ionicons
-						name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
-						size={23}
-						color={drawerConfig.tintColor}
-					/>
-				),
-				drawerLabel: 'My Shop'
-			}
-		}
-	},
-	{
-		contentOptions: {
-			//configure the content
-			activeTintColor: Colors.primary //is active color
-		},
-		contentComponent: (
-			props //add components for the size drawer
-		) => {
-			const dispatch = useDispatch();
-			return (
-				<View style={{ flex: 1, paddingTop: 28 }}>
-					<SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
-						<DrawerNavigatorItems {...props} />
-						<Button
-							title="Logout"
-							color={Colors.primary}
-							onPress={() => {
-								dispatch(logout());
-								//token and id has already been cleared in redux
-							}}
+const ShopDrawerNavigator = createDrawerNavigator();
+export const ShopNavigator = () => {
+	const dispatch = useDispatch();
+
+	return (
+		<ShopDrawerNavigator.Navigator
+			drawerContent={props => (
+				<LogoutButtonDrawerItem dispatch={dispatch} {...props} />
+			)} //react component to use as Drawer Item
+			drawerContentOptions={{ activeTintColor: Colors.primary }}
+		>
+			<ShopDrawerNavigator.Screen
+				name="Products"
+				component={ProductStackNavigator}
+				options={{
+					drawerIcon: props => (
+						<Ionicons
+							name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+							color={props.color} //will depend on whether this component is active, and the active tint color
+							size={23}
 						/>
-					</SafeAreaView>
-				</View>
-			);
-		}
-	}
+					)
+				}}
+			/>
+			<ShopDrawerNavigator.Screen
+				name="Orders"
+				component={OrdersStackNavigator}
+				options={{
+					drawerIcon: props => (
+						<Ionicons
+							name={Platform.OS === 'android' ? 'md-list' : 'ios-list'}
+							size={23}
+							color={props.color} //color of icon depends on tint color
+						/>
+					)
+				}}
+			/>
+			<ShopDrawerNavigator.Screen
+				name="User"
+				component={UserStackNavigator}
+				options={{
+					drawerIcon: props => (
+						<Ionicons
+							name={Platform.OS === 'android' ? 'md-create' : 'ios-create'}
+							size={23}
+							color={props.color}
+						/>
+					)
+				}}
+			/>
+		</ShopDrawerNavigator.Navigator>
+	);
+};
+
+const LogoutButtonDrawerItem = props => (
+	<View style={{ flex: 1, paddingTop: 28 }}>
+		<SafeAreaView forceInset={{ top: 'always', horizontal: 'never' }}>
+			<DrawerItemList {...props} />
+			<Button
+				title="Logout"
+				color={Colors.primary}
+				onPress={() => {
+					props.dispatch(logout());
+					//token and id has already been cleared in redux
+				}}
+			/>
+		</SafeAreaView>
+	</View>
 );
 
 // ? Main Navigator

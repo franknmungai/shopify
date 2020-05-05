@@ -99,7 +99,7 @@ const EditProductScreen = props => {
 	}, [prodId, formState]); //this function needs to be recreated whenever the inputs change.
 	useEffect(() => {
 		//changing the props will cause the component to re-render, but useEffect will not be called since its dependencies have not changed
-		props.navigation.setParams({ submit: submitHandler });
+		props.navigation.setParams({ submit: submitHandler }); //passing this function from our component to the header buttons
 	}, [submitHandler]);
 
 	const inputChangeHandler = useCallback(
@@ -186,9 +186,9 @@ const EditProductScreen = props => {
 	);
 };
 
-EditProductScreen.navigationOptions = navData => {
+export const screenOptions = navData => {
 	const productId = navData.navigation.getParam('productId'); //if presnt, we are in edit state, otherwise, add state:
-	const submitFn = navData.navigation.getParam('submit');
+	const submitFn = navData.navigation.getParam('submit'); //passing a function as params
 	return {
 		headerTitle: productId ? 'Edit Product' : 'Add Product',
 		headerRight: (

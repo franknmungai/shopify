@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import Colors from '../theme/Colors';
 import { authenticate } from '../store/actions/authActions';
+
 const StartupScreen = props => {
 	const dispatch = useDispatch();
 	useEffect(() => {
@@ -23,9 +24,9 @@ const StartupScreen = props => {
 			if (expiryDate < new Date().getTime() || !(token && userId)) {
 				return props.navigation.navigate('Auth');
 			}
-			const exp = expiryDate - new Date().getTime;
+			const expirationTime = expiryDate - new Date().getTime;
 			props.navigation.navigate('Shop');
-			dispatch(authenticate(token, userId, exp));
+			dispatch(authenticate(token, userId, expirationTime));
 		};
 		autoLogin();
 	}, []);
