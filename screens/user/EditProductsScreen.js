@@ -49,7 +49,8 @@ const formReducer = (state, action) => {
 const EditProductScreen = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState();
-	const prodId = props.navigation.getParam('productId');
+	const { prodId } = props.route.params;
+	if (!prodId) return;
 
 	const editedProduct = useSelector(state =>
 		state.products.userProducts.find(prod => prod.id === prodId)
@@ -99,8 +100,23 @@ const EditProductScreen = props => {
 	}, [prodId, formState]); //this function needs to be recreated whenever the inputs change.
 	useEffect(() => {
 		//changing the props will cause the component to re-render, but useEffect will not be called since its dependencies have not changed
-		props.navigation.setParams({ submit: submitHandler }); //passing this function from our component to the header buttons
-	}, [submitHandler]);
+
+		//adding options dynamically to this component with set options.
+		props.navigation.setOptions({
+			headerRight: () => (
+				//add a header right to this component
+				<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+					<Item
+						title="Save"
+						iconName={
+							Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
+						}
+						onPress={submitHandler}
+					/>
+				</HeaderButtons>
+			)
+		});
+	}, [submitHandler]); //whenever the submit handler changes, we reset that option (headerRight, updating it with the new function)
 
 	const inputChangeHandler = useCallback(
 		(inputField, value, validity) => {
@@ -187,21 +203,11 @@ const EditProductScreen = props => {
 };
 
 export const screenOptions = navData => {
-	const productId = navData.navigation.getParam('productId'); //if presnt, we are in edit state, otherwise, add state:
-	const submitFn = navData.navigation.getParam('submit'); //passing a function as params
+	//paraams are passed in a new object called route.params.
+	const { productId } = navData.route.params || {}; //our  param value will either exist or be undefined (false)
+	// if productId is present, we are in editState, otherwise, add state
 	return {
-		headerTitle: productId ? 'Edit Product' : 'Add Product',
-		headerRight: () => (
-			<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-				<Item
-					title="Save"
-					iconName={
-						Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-					}
-					onPress={submitFn}
-				/>
-			</HeaderButtons>
-		)
+		headerTitle: productId ? 'Edit Product' : 'Add Product'
 	};
 };
 const styles = StyleSheet.create({

@@ -13,7 +13,7 @@ import Colors from '../../theme/Colors';
 import { addToCart } from '../../store/actions/cartActions';
 
 const ProductDetailScreen = props => {
-	const productId = props.navigation.getParam('productId');
+	const { productId } = props.route.params;
 	const selectedProduct = useSelector(state =>
 		state.products.availableProducts.find(prod => prod.id === productId)
 	);
@@ -61,8 +61,9 @@ const styles = StyleSheet.create({
 });
 
 export const ProductDetailsScreenOptions = navData => {
+	const { productTitle } = navData.route.params;
 	return {
-		headerTitle: navData.navigation.getParam('productTitle')
+		headerTitle: productTitle
 	};
 };
 
