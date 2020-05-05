@@ -132,10 +132,12 @@ const ProductOverviewScreen = props => {
 	);
 };
 
-ProductOverviewScreen.navigationOptions = navData => {
+export const ProductsOverviewScreenOptions = navData => {
+	//will receive navData as an argument from react-navigation-componenent
 	return {
 		headerTitle: 'Products',
-		headerRight: (
+		headerRight: () => (
+			//takes in a component
 			<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
 				<Item
 					title="Cart"
@@ -146,7 +148,7 @@ ProductOverviewScreen.navigationOptions = navData => {
 				/>
 			</HeaderButtons>
 		),
-		headerLeft: (
+		headerLeft: () => (
 			<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
 				<Item
 					title="Menu"

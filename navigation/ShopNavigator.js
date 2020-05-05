@@ -2,24 +2,28 @@ import React from 'react';
 import { Platform, Button, View, SafeAreaView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'; //combine our navigators into a single component
-import { createStackNavigator } from 'react-navigation-stack';
-import {
-	createDrawerNavigator,
-	DrawerNavigatorItems //Component that renders the navigation list in the drawer.
-} from 'react-navigation-drawer';
-import ProductOverviewScreen from '../screens/shop/ProductsOverviewScreen';
-import ProductDetailScreen from '../screens/shop/ProductDetailsScreen';
-import Colors from '../theme/Colors';
-import CartScreen from '../screens/shop/CartScreen';
-import OrdersScreen from '../screens/shop/OrdersScreen';
 import { Ionicons } from '@expo/vector-icons';
+
+import ProductOverviewScreen, {
+	ProductsOverviewScreenOptions
+} from '../screens/shop/ProductsOverviewScreen';
+import ProductDetailScreen, {
+	ProductDetailsScreenOptions
+} from '../screens/shop/ProductDetailsScreen';
+import Colors from '../theme/Colors';
+import CartScreen, { cartScreenOptions } from '../screens/shop/CartScreen';
+import OrdersScreen from '../screens/shop/OrdersScreen';
 import UserProductsScreen from '../screens/user/UserProductsScreen';
 import EditProductScreen from '../screens/user/EditProductsScreen';
 import AuthScreen from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import { logout } from '../store/actions/authActions';
 
-// ? The default stack navigation options:
+// ? React Navigation v5.
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+// ? The default stack navigation options: These haven't changed in react-navigtion v5. Just how you apply this configurations😇
 const defaultStackNavOptions = {
 	headerStyle: {
 		backgroundColor: Platform.OS === 'android' ? Colors.primary : ''
@@ -31,22 +35,28 @@ const defaultStackNavOptions = {
 	headerTintColor: Platform.OS === 'android' ? '#fff' : Colors.primary //color of the header text
 };
 
-const ProductStackNavigator = createStackNavigator(
-	{
-		//returns react component
-		productsOverview: ProductOverviewScreen,
-		productDetail: ProductDetailScreen,
-		cart: {
-			screen: CartScreen,
-			navigationOptions: {
-				headerTitle: 'Cart'
-			}
-		}
-	},
-	{
-		defaultNavigationOptions: defaultStackNavOptions
-	}
-);
+const ProductsStackNavigator = createStackNavigator();
+export const ProductsNavigator = () => {
+	return (
+		<ProductsStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
+			<ProductsStackNavigator.Screen
+				name="productsOverview"
+				component={ProductOverviewScreen}
+				options={ProductsOverviewScreenOptions}
+			/>
+			<ProductsStackNavigator.Screen
+				name="productDetail"
+				component={ProductDetailScreen}
+				options={ProductDetailsScreenOptions}
+			/>
+			<ProductsStackNavigator.Screen
+				name="cart"
+				component={CartScreen}
+				options={cartScreenOptions}
+			/>
+		</ProductsStackNavigator.Navigator>
+	);
+};
 
 const OrdersStackNavigator = createStackNavigator(
 	{

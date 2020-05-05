@@ -1,19 +1,11 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import ProductOverviewScreen from '../screens/shop/ProductsOverviewScreen';
-
-const ProductStack = createStackNavigator();
-
+import { ProductsNavigator } from './ShopNavigator';
 const AppNavigation = props => {
 	return (
+		//navigaation container should wrap our all our navigators
 		<NavigationContainer>
-			<ProductStack.Navigator>
-				<ProductStack.Screen
-					name="Products Overview"
-					component={ProductOverviewScreen}
-				/>
-			</ProductStack.Navigator>
+			<ProductsNavigator />
 		</NavigationContainer>
 	);
 };
