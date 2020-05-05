@@ -191,7 +191,7 @@ export const screenOptions = navData => {
 	const submitFn = navData.navigation.getParam('submit'); //passing a function as params
 	return {
 		headerTitle: productId ? 'Edit Product' : 'Add Product',
-		headerRight: (
+		headerRight: () => (
 			<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
 				<Item
 					title="Save"

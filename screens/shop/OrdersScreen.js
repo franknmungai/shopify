@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
 });
 export const screenOptions = navData => ({
 	headerTitle: 'Your orders',
-	headerLeft: (
+	headerLeft: () => (
 		<HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
 			<Item
 				title="Menu"

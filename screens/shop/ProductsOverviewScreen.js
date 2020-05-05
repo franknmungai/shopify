@@ -48,14 +48,14 @@ const ProductOverviewScreen = props => {
 
 	//* refresh the products again when we navigate to the component to show latest db changes
 	useEffect(() => {
-		const willFocusListener = props.navigation.addListener(
-			//perform a refresh everytime we focus on this screen
-			'willFocus',
+		const unSubscribe = props.navigation.addListener(
+			//perform a refresh everytime we focus on this screen. This listener returns the unsubscribe func which we need to call on unmount
+			'focus',
 			loadProducts
 		);
 		return () => {
 			//clean up on unmount
-			willFocusListener.remove();
+			unSubscribe();
 		};
 	}, [loadProducts]);
 

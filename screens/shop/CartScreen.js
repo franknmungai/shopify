@@ -81,9 +81,9 @@ const CartScreen = props => {
 	);
 };
 
-export const cartScreenOptions = () => {
-	headerTitle: 'My Cart';
-};
+export const cartScreenOptions = () => ({
+	headerTitle: 'My Cart'
+});
 
 const styles = StyleSheet.create({
 	screen: {

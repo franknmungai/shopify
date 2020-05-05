@@ -13,7 +13,10 @@ const authReducer = (state = initialState, action) => {
 				userId: action.userId
 			};
 		case types.LOGOUT:
-			return initialState;
+			return {
+				...initialState,
+				previousAutoLoginAttempt: true
+			};
 		case types.AUTO_LOGIN:
 			return { ...state, previousAutoLoginAttempt: true };
 		default:
