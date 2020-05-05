@@ -1,7 +1,8 @@
 import * as types from '../actions/actionConsts';
 const initialState = {
 	idToken: null,
-	userId: null
+	userId: null,
+	previousAutoLoginAttempt: false
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,6 +14,8 @@ const authReducer = (state = initialState, action) => {
 			};
 		case types.LOGOUT:
 			return initialState;
+		case types.AUTO_LOGIN:
+			return { ...state, previousAutoLoginAttempt: true };
 		default:
 			return state;
 	}

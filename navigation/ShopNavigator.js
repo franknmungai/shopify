@@ -25,7 +25,9 @@ import EditProductScreen, {
 	screenOptions as EditProductsScreenOptions
 } from '../screens/user/EditProductsScreen';
 
-import AuthScreen from '../screens/user/AuthScreen';
+import AuthScreen, {
+	screenOptions as AuthScreenOptions
+} from '../screens/user/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import { logout } from '../store/actions/authActions';
 
@@ -106,19 +108,15 @@ export const UserStackNavigator = () => {
 const AuthStackNavigator = createStackNavigator();
 export const AuthNavigator = () => (
 	<AuthStackNavigator.Navigator screenOptions={defaultStackNavOptions}>
-		<AuthStackNavigator.Screen name="Auth" component={AuthScreen} />
+		<AuthStackNavigator.Screen
+			name="Auth"
+			component={AuthScreen}
+			options={AuthScreenOptions}
+		/>
 	</AuthStackNavigator.Navigator>
 );
 
-const AuthStackNavigator = createStackNavigator(
-	{
-		Auth: AuthScreen
-	},
-	{
-		defaultNavigationOptions: defaultStackNavOptions
-	}
-);
-// * Combine our three stack navigators
+// * Combine our three stack navigators. This will be our main navigator and primary component
 const ShopDrawerNavigator = createDrawerNavigator();
 export const ShopNavigator = () => {
 	const dispatch = useDispatch();
@@ -188,11 +186,3 @@ const LogoutButtonDrawerItem = props => (
 		</SafeAreaView>
 	</View>
 );
-
-// ? Main Navigator
-const MainNavigator = createSwitchNavigator({
-	Startup: StartupScreen,
-	Auth: AuthStackNavigator,
-	Shop: ShopNavigator
-});
-export default createAppContainer(MainNavigator); //takes in the main navigator

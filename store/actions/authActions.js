@@ -9,6 +9,11 @@ export const authenticate = (token, userId, exp) => dispatch => {
 	});
 	dispatch(setLogoutTimer(exp));
 };
+
+export const autoLogin = () => ({
+	type: types.AUTO_LOGIN
+});
+
 export const signUp = (email, password) => async dispatch => {
 	//AIzaSyAW1WCLq-s4OLe0VfNvq4E6LOJC15nGb4I
 	console.log({ email, password });

@@ -8,3 +8,4 @@ export const GET_AVAILABLE_PRODUCTS = 'GET_AVAILABLE_PRODUCTS';
 export const SET_ORDERS = 'SET_ORDERS';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const LOGOUT = 'LOGOUT';
+export const AUTO_LOGIN = 'AUTO_LOGIN';

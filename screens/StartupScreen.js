@@ -7,7 +7,10 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import Colors from '../theme/Colors';
-import { authenticate } from '../store/actions/authActions';
+import {
+	authenticate,
+	autoLogin as _autoLogin
+} from '../store/actions/authActions';
 
 const StartupScreen = props => {
 	const dispatch = useDispatch();
@@ -15,14 +18,15 @@ const StartupScreen = props => {
 		const autoLogin = async () => {
 			const data = await AsyncStorage.getItem('userData');
 			if (!data) {
-				props.navigation.navigate('Auth');
+				dispatch(_autoLogin());
 				return;
 			}
 			const userData = JSON.parse(data);
 			const { token, userId, expiryDate } = userData;
 
 			if (expiryDate < new Date().getTime() || !(token && userId)) {
-				return props.navigation.navigate('Auth');
+				dispatch(autoLogin());
+				return;
 			}
 			const expirationTime = expiryDate - new Date().getTime;
 			props.navigation.navigate('Shop');
